@@ -11,7 +11,7 @@ class FileTag(yaml.YAMLObject):
 
 class Barista(object):
 
-    def brew(self, stream=None, filename=None):
+    def brew(self, filename=None, stream=None):
         " Read a single file and brew it."
 
         if stream != None:

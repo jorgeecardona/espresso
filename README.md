@@ -34,3 +34,19 @@ or:
 Also a CLI will be defined to use like:
 
      barista --brew /tmp/desc.yaml
+
+Adding new types
+----------------
+
+Adding new types must be easy to do, assign them a possible tag to be encounter in a description. We must be thinking in an option to add them as plugins.
+
+Templating
+----------
+
+Since yaml has no variables, I imagine the best option is to define a templating stage in which the files are just templates that crates a valid yaml file, then it would be impossible to use current types to feed the template.
+
+
+Multiple files
+--------------
+
+How to define a standard way to combine description in several files.

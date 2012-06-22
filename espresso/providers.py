@@ -1,5 +1,7 @@
 import pbs
 import os
+import pwd
+import grp
 from functools import partial
 
 
@@ -50,10 +52,15 @@ class FileProvider(BaseProvider):
         else:
             raise self.FileDoesNotExists(path)
 
+    def assert_non_directory(self, path):
+        if os.path.exists(path):
+            if os.path.isdir(path):
+                raise self.PathIsDirectory(path)
+
     def set(self, path, content, mode=None, owner=None):
         " Set the content of a file."
 
-        self.assert_existing_file(path)
+        self.assert_non_directory(path)
 
         with open(path, 'w') as fd:
             fd.write(content)
@@ -61,15 +68,19 @@ class FileProvider(BaseProvider):
     def chown(self, path, owner=None, group=None):
         " Change owner of a path."
 
-        owner = -1 if owner is None else owner
-        group = -1 if group is None else group
-
         # We need an previously existing file.
         self.assert_existing_file(path)
 
+        uid = -1
+        if owner != None:
+            uid = pwd.getpwnam(owner).pw_uid
+
+        gid = -1
+        if group != None:
+            gid = grp.getgrnam(group).gr_gid
+
         # Change owner.
-        print owner, group
-        os.chown(path, owner, group)
+        os.chown(path, uid, gid)
 
 
 class TemplateProvider(BaseProvider):
