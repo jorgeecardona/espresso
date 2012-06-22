@@ -1,0 +1,5 @@
+- Build a system c or c++ based as libraries to be used for the python, ruby and java binding.
+- Dynamical configuration, not just one time configuration, but constantly changing assets.
+- "Centralized"? cmdb?
+- Capacity to store or to build recipes from different sources: DB, ldap, cli.
+- Meaningful returning and exception handling.
