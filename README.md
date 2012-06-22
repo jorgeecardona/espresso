@@ -27,8 +27,8 @@ The idea is to be able to use espresso either as a library or as a command shell
 
 or:
 
-   from espress.types import File
-   f = File('/tmp/somefile', content="Hello world!", owner="root", group="audio")
+    from espress.types import File
+    f = File('/tmp/somefile', content="Hello world!", owner="root", group="audio")
 
 
 Also a CLI will be defined to use like:
