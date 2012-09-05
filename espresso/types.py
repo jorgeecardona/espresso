@@ -1,8 +1,21 @@
-from providers import PackageProvider, FileProvider
+from providers import PackageProvider, FileProvider, ExecProvider
 
 
 class BaseType(object):
     pass
+
+
+class Exec(BaseType):
+
+    provider = ExecProvider()
+
+    def __init__(self, command):
+        self.command = command
+
+    def apply(self):
+        " Run command."
+
+        self.provider.run_command(self.command)
 
 
 class Package(BaseType):

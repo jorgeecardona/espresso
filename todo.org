@@ -1,5 +1,46 @@
-- Build a system c or c++ based as libraries to be used for the python, ruby and java binding.
-- Dynamical configuration, not just one time configuration, but constantly changing assets.
-- "Centralized"? cmdb?
-- Capacity to store or to build recipes from different sources: DB, ldap, cli.
-- Meaningful returning and exception handling.
+ - Components:   
+   - AMQP system:     
+     - Exchange the system
+     - We need here a distributed way to create queues.
+     - Any queue has some consumer of the queue, all the consumers of a queue must be know each other in order to consume the queue an ensure other aspects.
+       - All the enq and deq operation are made in some quorum of the set of servers.
+
+       - When a message is going to be consumed it arrives to the set of posible consumers and they decide with quourum who is going to consume the message.
+	 - How do we inform this quorum for an arriving message to them. The set of consumers of the queue must intercept the quourum of servers receiving the message.	   
+   - Task systems (RPC):
+   - Profiling system:
+
+
+
+
+
+
+- Old:
+ - Build a system on c or c++ based as libraries to be used for the python, ruby and java binding.
+ - Dynamical configuration, not just one time configuration, but constantly changing assets.
+ - "Centralized"? cmdb?
+ - Capacity to store or to build recipes from different sources: DB, ldap, cli.
+ - Meaningful returning and exception handling.
+
+
+
+--- New t
+
+
+- New:
+ - Masterless system.
+ - Standalone.
+ - Mesh routing of messages.
+ - Gossip protocol to inform about the current state of the system.
+ - Extensible through subclassing and hooks.
+ - Every new controller is a new plugin: aptitude, pip, apache, mysql, etc.
+
+ - The rest is called module.
+
+ - We can use this from the cli, but mainly from python code:
+  - Libraries to enfornce an state, and track the current state, and last state, 
+    and possible changes.
+
+  - Configuration by default store the state in /var/lib/espresso/states/<id>.state
+
+ - Everything that has a state to be tracked must say it, so we can track it.

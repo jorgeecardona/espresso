@@ -106,3 +106,19 @@ class TemplateProvider(BaseProvider):
                 "The template %s was already defined." % (name, ))
 
         self.templates[name] = content
+
+
+class ExecProvider(BaseProvider):
+    """
+    Exec code as commands or scripts.
+    """
+
+    shell = partial(pbs.Command('bash'), '-c')
+
+    def run_command(self, command):
+        " Run a simple command."
+
+        # Run command
+        output = self.shell(command)
+        print output.stdout
+        return output.stdout, output.stderr

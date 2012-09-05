@@ -1,52 +1,31 @@
+========
 Espresso
 ========
 
-This is a just born tool to *manage* machines from a cli and also programatically.
+Espresso is a just born tool that help you to manage servers using a cli or from your code.
 
+What do we need to manage servers?
+==================================
+
+These are some of the componentes needed in order to manage a big infrastructure.
+
+Messaging system between servers
+--------------------------------
+
+Some messaging system close to AMQP but lighter would be really nice to have, ZeroMQ seems to be the perfect tool to do it, also some kind of distributed queue based on
+quourum systems and taking the main ideas of AMQP.
+
+Plugins in top of the messages
+------------------------------
+
+Basically after the messaging system a set of plugable tool that catch this messages would be great to manage the server in different ways.
 
 Goals
 -----
 
-We need to define somehow a recipe/confi/description/spec file that defines what we want. We must be able to apply this, in any async way, or as a daemon system that detect to misbehaviours and correct them, as a daemon listening for changes.
+1) Be able to use this in a single server.
 
-Describing a system
--------------------
+2) No single points of failure, no master-slave configurations, all the servers are equal up to some tagging and classification between them, but there is not holy master server.
 
-We're going to use YAML as the markup language to define the system, using tags we can
-define which components are existing in the platform. 
+3) A good set of native plugins to set up basic things in the server, and to run tasks, and a global cron system.
 
-Library vs Shell
-----------------
-
-The idea is to be able to use espresso either as a library or as a command shell, then we will be able to do this:
-
-    from espresso.barista import Barista
-
-    b = Barista()
-    b.brew('/tmp/desc.yaml')
-
-or:
-
-    from espress.types import File
-    f = File('/tmp/somefile', content="Hello world!", owner="root", group="audio")
-
-
-Also a CLI will be defined to use like:
-
-     barista --brew /tmp/desc.yaml
-
-Adding new types
-----------------
-
-Adding new types must be easy to do, assign them a possible tag to be encounter in a description. We must be thinking in an option to add them as plugins.
-
-Templating
-----------
-
-Since yaml has no variables, I imagine the best option is to define a templating stage in which the files are just templates that crates a valid yaml file, then it would be impossible to use current types to feed the template.
-
-
-Multiple files
---------------
-
-How to define a standard way to combine description in several files.

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='espresso',
-    description='A tool to easily manage small configurations',
+    description='Manage your servers easily',
     version='0.2',
     author='Jorge E. Cardona',
     author_email='jorgeecardona@gmail.com',
@@ -16,11 +16,10 @@ setup(
     entry_points={
         'console_scripts': [
             'barista = espresso.cli:barista',
+			'espresso = espresso.daemon:espresso',
             ],
         },
-    install_requires=[
-        'pbs==0.105',
-        'PyYAML==3.10'],
+    install_requires=['pyzmq>=2.2.0.1', 'gevent'],
     setup_requires=[
         'mock']
     )

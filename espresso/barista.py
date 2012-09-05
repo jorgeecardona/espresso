@@ -1,5 +1,5 @@
 import yaml
-from types import File, BaseType
+from types import File, BaseType, Exec
 
 
 class FileTag(yaml.YAMLObject):
@@ -7,6 +7,13 @@ class FileTag(yaml.YAMLObject):
 
     def __new__(cls, path=None, content=None, owner=None, group=None):
         return File(path, content=content, owner=owner, group=group)
+
+
+class ExecTag(yaml.YAMLObject):
+    yaml_tag = u'!Exec'
+
+    def __new__(cls, command=None):
+        return Exec(command)
 
 
 class Barista(object):
