@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='espresso',
-    description='Manage your servers easily',
+    description='Manage the configuration of your servers easily.',
     version='0.2',
     author='Jorge E. Cardona',
-    author_email='jorgeecardona@gmail.com',
+    author_email='jorge@cardona.co',
     packages=find_packages(),
     license="BSD",
     test_suite='tests',
@@ -15,11 +15,13 @@ setup(
         ],
     entry_points={
         'console_scripts': [
-            'barista = espresso.cli:barista',
 			'espresso = espresso.daemon:espresso',
             ],
         },
-    install_requires=['pyzmq>=2.2.0.1', 'gevent'],
+    install_requires=[
+        'distribute',
+        'sh'],
     setup_requires=[
+        'distribute',
         'mock']
     )
