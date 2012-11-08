@@ -1,35 +1,37 @@
 import argparse
-import zmq
-from uuid import uuid4
+from espresso.configuration import Configuration
 
 
-def barista():
-    " Espresso CLI."
+def main(argv=None):
+    """
+    Basic cli for espresso.
 
-    parser = argparse.ArgumentParser(description="Brew some coffee")
+    For now we just need to handle configurations.
 
-    # Seed for the system.
-    parser.add_argument(
-        '--seed', dest='seed', help='Seed peer to connect.', default='127.0.0.1:8888')
+    """
 
-    # List the peers connected.
-    parser.add_argument('--list-peers', dest='list_peers', help='List the peers in the system.', action='store_true', default=False)
+    # Create parser.
+    parser = argparse.ArgumentParser(description="Espresso command-line interface")
 
-    # Parse arguments
-    args = parser.parse_args()
+    # Select the namespace used.
+    parser.add_argument('--namespace', help="Select namespace for any operation.", 
+                        required=True)
+    
+    # Add argument.
+    parser.add_argument('--add-option', nargs=2, dest="add_option", default=None,
+                        help="Add a new option, eg: general.ip 1.1.1.1")
 
-    if args.list_peers:
+    # Parse the args.
+    args = parser.parse_args(argv)
 
-        # Random id.
-        id = str(uuid4())
+    # Check if we want to add an option.
+    if args.add_option is not None:
 
-        # We need to connect to some peer and ask this.
-        context = zmq.Context()
+        # Get section and name.
+        section, name = args.add_option[0].split('.')
 
-        # Connecting to peer.
-        socket = context.socket(zmq.PUB)
-        socket.connect('tcp://' + args.seed)
+        # Get value.
+        value = args.add_option[2]
 
-        # Send request.
-        socket.send_json({'espresso': {'command': 'list-peers', 'sender': id}})
-
+        # Use the namespace.
+        Configuration(args.namespace).set(section, name, value)

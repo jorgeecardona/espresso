@@ -4,28 +4,12 @@ Espresso
 
 The goal of Espresso is to help in the management of configuration and integration of services in different servers.
 
-For now the main component is the daemon that listen for `espresso components` which can be anything from files to services.
-
-Components of Espresso
-======================
-
-A daemon called `espresso` should be running all times, and its function is to detect new components based
-on the entry_point `espresso.components` and this components will be defined immediately the package that
-define them is installed or updated.
-
-Each component has a `type`, `name` and `data` which gives the basic (for now) information to define them,
-then a plugin supporting the type will define the compoentns.
-
-New plugins can be added in real time using the entry_point `espresso.plugins`.
-
-Configurations
-==============
-
-Espresso manage the configurations and can have several configuration backends, as file-system, db, or distributed.
-
+For now is just a wrapper to configurations using namespaces.
 
 Future Ideas
 ============
+
+ - Components.
 
 
 What do we need to manage servers?
