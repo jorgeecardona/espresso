@@ -36,4 +36,13 @@ class Configuration(object):
 
         conf = ConfigParser()
         conf.read('/etc/espresso/conf.d/%s.conf' % (self.namespace, ))
-        return conf.set(section, name, value)
+
+        # Check for section
+        if not conf.has_section(section):
+            conf.add_section(section)
+        
+        conf.set(section, name, value)
+
+        # Write back configurations.
+        with open('/etc/espresso/conf.d/%s.conf' % (self.namespace, ), 'w') as fd:
+            conf.write(fd)

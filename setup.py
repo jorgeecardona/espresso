@@ -3,10 +3,10 @@ from setuptools import setup, find_packages
 setup(
     name='espresso',
     description='Manage the configuration of your servers easily.',
-    version='1.0',
+    version='1.0.6',
     author='Jorge E. Cardona',
     author_email='jorge@cardona.co',
-    packages=find_packages(),
+    packages=['espresso'],
     license="BSD",
     test_suite='tests',
     classifiers=[
@@ -15,15 +15,12 @@ setup(
         ],
     entry_points={
         'console_scripts': [
-            'setup-espresso = espresso.setup:main',
-            'espresso = espresso.espresso:main'
+            'setup-espresso = espresso.cli:setup',
+            'espresso = espresso.cli:main'
             ],
         },
     install_requires=[
-        'distribute',
-        'sh',
-        'gevent'],
-    setup_requires=[
-        'distribute',
-        'mock']
+        'configparser>=3.2', 
+        'distribute'],
+    setup_requires=['distribute']
     )
