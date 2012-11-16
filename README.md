@@ -2,6 +2,9 @@
 Espresso
 ========
 
+[![Build Status](https://travis-ci.org/jorgeecardona/espresso.png)](https://travis-ci.org/jorgeecardona/espresso)
+
+
 The goal of Espresso is to help in the management of configuration and integration of services in different servers.
 
 For now is just a wrapper to configurations using namespaces.
