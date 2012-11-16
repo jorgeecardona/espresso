@@ -41,7 +41,7 @@ class DirectoryStorage(object):
         " Look for object."
 
         for directory in self.directories:
-            if os.path.ispath(directory):
+            if os.path.isdir(directory):
                 if name in os.listdir(directory):
                     with open(os.path.join(directory, name)) as fd:
                         content = fd.read()

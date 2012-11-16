@@ -9,10 +9,27 @@ The goal of Espresso is to help in the management of configuration and integrati
 
 For now is just a wrapper to configurations using namespaces.
 
+Current State
+=============
+
+File's Storage
+--------------
+
+There is a basic storage defined in `espresso.storage` to get files from a set of directories. 
+
+Currently just directory storage, and http storage and cloudfiles on its way (more likely with libcloud).
+
+Configurations
+--------------
+
+A set of global configurations can be set separated in namespaces to be used from any stage of the configuration.
+
+
 Future Ideas
 ============
 
  - Components.
+ - Staging.
 
 
 What do we need to manage servers?
