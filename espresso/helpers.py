@@ -47,7 +47,7 @@ class Shell(object):
 class DebConf(object):
     def set_selections(self, content):
         print(" * Set selections for debian packages.")
-        sh.Command('debconf-set-selectios')(_in=content, _err=sys.stderr, _out=sys.stdout)
+        sh.Command('debconf-set-selections')(_in=content, _err=sys.stderr, _out=sys.stdout)
 
 class Dpkg(object):
 
