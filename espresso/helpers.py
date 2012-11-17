@@ -26,11 +26,16 @@ class FsTab(object):
 
         line = line[0]            
 
+        # Get options.
+        options = fs.lines[line].get_options()
+
         # Option on it?
-        if option not in fs.lines[line].options:
+        if option not in options:
+
+            options.append(option)
 
             # Set new option.
-            fs.lines[line].options.append(option)
+            fs.lines[line].set_options(options)            
             
             # Write change.
             fs.write('/etc/fstab')
