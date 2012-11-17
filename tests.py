@@ -1,5 +1,6 @@
 from unittest import TestCase
 import tempfile
+import shutil
 
 
 class ImportTestCase(TestCase):
@@ -9,8 +10,13 @@ class ImportTestCase(TestCase):
         __import__('espresso')
 
 
-
 class StorageTestCase(TestCase):
+
+    def tearDown(self):
+
+        # Delete any tempdir.
+        for tempdir in getattr(self, '_delete_temporary_dirs', []):
+            shutil.rmtree(tempdir)
 
     def test_directory_storage(self):
         " Test the directory storage."
@@ -19,6 +25,9 @@ class StorageTestCase(TestCase):
 
         # Create a pair of tempfile.
         tempdir_1, tempdir_2 =  tempfile.mkdtemp(), tempfile.mkdtemp()
+        
+        # Remove this at the end.
+        self._delete_temporary_dirs = [tempdir_1, tempdir_2]
 
         storage = DirectoryStorage([tempdir_1, tempdir_2])
 
@@ -43,4 +52,5 @@ class StorageTestCase(TestCase):
         # Respect order in lookup.
         self.assertEqual(storage['file'], 'content in 1')
 
+        
         
