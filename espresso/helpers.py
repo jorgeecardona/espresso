@@ -62,7 +62,7 @@ class Dpkg(object):
     def safe_upgrade(self):
         sh.aptitude('-y', 'safe-upgrade', _err=sys.stderr, _out=sys.stdout)
 
-    def ensure_installed(self):
+    def ensure_installed(self, packages):
         sh.aptitude('-y', 'install', *packages, _err=sys.stderr, _out=sys.stdout)
 
 
