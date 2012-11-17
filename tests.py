@@ -53,4 +53,36 @@ class StorageTestCase(TestCase):
         self.assertEqual(storage['file'], 'content in 1')
 
         
+class StageTestCase(TestCase):
+
+    def test_meta(self):
+
+        from espresso.stage import Stage
+
+        global variable
+
+        class MyStage(Stage):
+
+            class Meta(object):
+                name = 'my-stage'
+
+            def run(self):
+                global variable
+                variable = 2
+                return self._meta['name']
+
+        class MySecondStage(Stage):
+            
+            class Meta(object):
+                name = 'second'
+                requires = MyStage()
+
+            def run(self):
+                return 1
+
         
+        self.assertEqual(MyStage().run(), 'my-stage')
+
+        variable = 1
+        self.assertEqual(MySecondStage().run(), 1)
+        self.assertEqual(variable, 2)
