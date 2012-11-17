@@ -17,7 +17,7 @@ Stages
 
 Stages are just a way to combine different aspects of your configuration, like: setup the repositories, or 'create the directory structure', 'ensure needed libraries'.
 
-Between stages can be defined some control flow, as requires control. 
+Between stages can be defined some control flow, as requires control.
 
 In a future also signal will be available between stages.
 
@@ -28,39 +28,39 @@ Example:
 
     class SetupRepositoryStage(Stage):
         """
-	Setup Repository
- 	================
+        Setup Repository
+         ================
 
-	This stage will define the esential aspects of the repositories in the
-	system.
+        This stage will define the esential aspects of the repositories in the
+        system.
 
-	Look how nice is to have docs in the configuration, you can explain a lot
-	of things in here, as rationale for decisions and you can read this in a 
-	couple of months and will understand immediately.
+        Look how nice is to have docs in the configuration, you can explain a lot
+        of things in here, as rationale for decisions and you can read this in a
+        couple of months and will understand immediately.
 
-	"""
+        """
 
         class Meta:
-	    name = 'setup-repository'
-	    
+            name = 'setup-repository'
+
         def run(self, storage=Storage()):
 
-	    # Directory storage of useful files.
-	    storage = DirectoryStorage('/tmp')
+            # Directory storage of useful files.
+            storage = DirectoryStorage('/tmp')
 
-	    # Ensure the content of the sources.            
+            # Ensure the content of the sources.
             fs.ensure_file('/etc/apt/sources.list', content=storage['sources.list'])
-	    dpkg.update()	    					 
-	    
+            dpkg.update()
+
     class MainStage(Stage):
         """
-	Main
-	====
+        Main
+        ====
 
-	Our main system is based just in two packages, pretty silly but that's 
-	how it is.
+        Our main system is based just in two packages, pretty silly but that's
+        how it is.
 
-	"""
+        """
 
         class Meta:
             name = 'main'
@@ -68,7 +68,7 @@ Example:
 
         def run(self):
 
-	    # We just need two packages.
+            # We just need two packages.
             dpkg.ensure_installed('portsentry', 'python2.7')
 
 
@@ -76,8 +76,8 @@ Example:
 
         stage = MainStage()
 
-	# This will run also the run for SetupRepositoryStage thanks to
-	# the Stage's metaclass.
+        # This will run also the run for SetupRepositoryStage thanks to
+        # the Stage's metaclass.
 
         stage.run()
 
@@ -90,7 +90,7 @@ We can also run this from the console with (with the above in stages.py):
 File's Storage
 --------------
 
-There is a basic storage defined in `espresso.storage` to get files from a set of directories. 
+There is a basic storage defined in `espresso.storage` to get files from a set of directories.
 
 Currently just directory storage, and http storage and cloudfiles on its way (more likely with libcloud).
 
