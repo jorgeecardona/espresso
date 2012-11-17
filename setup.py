@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='espresso',
     description='Manage the configuration of your servers easily.',
-    version='1.0.8',
+    version='1.0.9',
     author='Jorge E. Cardona',
     author_email='jorge@cardona.co',
     packages=['espresso'],
@@ -21,6 +21,8 @@ setup(
         },
     install_requires=[
         'configparser>=3.2', 
-        'distribute'],
+        'distribute',
+        'fstab',
+        'sh'],
     setup_requires=['distribute']
     )
