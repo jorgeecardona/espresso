@@ -1,7 +1,7 @@
 import os
 import sys
 import sh
-import fstab
+import fstab as fstab_lib
 
 class FsTab(object):
 
@@ -16,7 +16,7 @@ class FsTab(object):
         print(" * Ensure that mount line with directory '%s' has option '%s' ..." % (
             directory, option))
         
-        fs = fstab.Fstab()
+        fs = fstab_lib.Fstab()
         fs.read('/etc/fstab')
 
         # Get line with file.
@@ -113,3 +113,4 @@ fs = FileSystem()
 dpkg =Dpkg()
 debconf = DebConf()
 shell = Shell()
+fstab = FsTab()
