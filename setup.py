@@ -1,9 +1,18 @@
 from setuptools import setup, find_packages
 
+# Requires.
+install_requires = ['configparser>=3.2', 'argparse', 'distribute', 'fstab', 'sh']
+
+try:
+    import importlib
+except ImportError:
+    install_requires.append('importlib')
+
+
 setup(
     name='espresso',
     description='Manage the configuration of your servers easily.',
-    version='1.0.14',
+    version='1.0.15',
     url='http://github.com/jorgeecardona/espresso',
     author='Jorge E. Cardona',
     author_email='jorge@cardona.co',
@@ -20,11 +29,6 @@ setup(
             'espresso = espresso.cli:main'
             ],
         },
-    install_requires=[
-        'configparser>=3.2', 
-        'argparse',
-        'distribute',
-        'fstab',
-        'sh'],
+    install_requires=install_requires,
     setup_requires=['distribute']
     )
