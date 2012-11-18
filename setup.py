@@ -12,7 +12,7 @@ except ImportError:
 setup(
     name='espresso',
     description='Manage the configuration of your servers easily.',
-    version='1.0.15',
+    version='1.0.16',
     url='http://github.com/jorgeecardona/espresso',
     author='Jorge E. Cardona',
     author_email='jorge@cardona.co',

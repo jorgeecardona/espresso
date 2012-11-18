@@ -1,7 +1,29 @@
 import os
 import sys
 import sh
+import pwd
 import fstab as fstab_lib
+
+class System(object):
+
+    def ensure_user(self, name, home=None):
+        " Ensure the presence of a user in the system and its home path."
+
+        print(" * Check if the user exists ... ")
+        
+        if any(name == u.pw_name for u in pwd.getpwall()):
+            print("   ... user already exists. ")
+            return
+
+        print("   ... create user ...")
+        
+        if home is not None:            
+            sh.adduser('-d', home, '-m', name, _err=sys.stderr, _out=sys.stdout)
+        else:
+            sh.adduser('-m', name, _err=sys.stderr, _out=sys.stdout)
+            
+        print("   ... done!")
+
 
 class FsTab(object):
 
@@ -119,3 +141,4 @@ dpkg =Dpkg()
 debconf = DebConf()
 shell = Shell()
 fstab = FsTab()
+system = System()
