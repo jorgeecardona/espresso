@@ -18,9 +18,9 @@ class System(object):
         print("   ... create user ...")
         
         if home is not None:            
-            sh.adduser('-d', home, '-m', name, _err=sys.stderr, _out=sys.stdout)
+            sh.useradd('-d', home, '-m', name, _err=sys.stderr, _out=sys.stdout)
         else:
-            sh.adduser('-m', name, _err=sys.stderr, _out=sys.stdout)
+            sh.useradd('-m', name, _err=sys.stderr, _out=sys.stdout)
             
         print("   ... done!")
 
