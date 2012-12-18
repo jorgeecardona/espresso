@@ -40,11 +40,39 @@ class DirectoryStorage(object):
     def __getitem__(self, name):
         " Look for object."
 
+        
+        # Look in the register directories for the name
         for directory in self.directories:
             if os.path.isdir(directory):
                 if name in os.listdir(directory):
+
+                    return DirectoryStorageItem(os.path.join(directory, name))
+
+                    # If file just return the content.
                     with open(os.path.join(directory, name)) as fd:
                         content = fd.read()
                     return content
 
         raise ValueError("The object doesn't exists in the storage.")
+
+
+class DirectoryStorageItem(str):
+    
+    def __new__(cls, path):
+
+        # Is a file?
+        if os.path.isfile(path):
+            with open(path) as fd:
+                content = fd.read()                
+
+            obj = str.__new__(cls, content)
+            setattr(obj, 'is_file', True)
+            setattr(obj, 'is_dir', False)
+
+        else:
+
+            obj = str.__new__(cls, path)
+            setattr(obj, 'is_file', False)
+            setattr(obj, 'is_dir', True)
+
+        return obj

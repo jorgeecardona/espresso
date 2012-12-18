@@ -1,4 +1,5 @@
 from unittest import TestCase
+import os
 import tempfile
 import shutil
 
@@ -52,6 +53,10 @@ class StorageTestCase(TestCase):
         # Respect order in lookup.
         self.assertEqual(storage['file'], 'content in 1')
 
+        # Lookup of directory.
+        os.mkdir(tempdir_1 + '/dir')
+        self.assertEqual(storage['dir'], tempdir_1 + '/dir')
+
         
 class StageTestCase(TestCase):
 
@@ -59,7 +64,7 @@ class StageTestCase(TestCase):
 
         from espresso.stage import Stage
 
-        global variable
+        global checkpoint
 
         class MyStage(Stage):
 
@@ -67,8 +72,8 @@ class StageTestCase(TestCase):
                 name = 'my-stage'
 
             def run(self):
-                global variable
-                variable = 2
+                global checkpoint
+                checkpoint = 2
                 return self._meta['name']
 
         class MySecondStage(Stage):
@@ -83,6 +88,50 @@ class StageTestCase(TestCase):
         
         self.assertEqual(MyStage().run(), 'my-stage')
 
-        variable = 1
+        checkpoint = 1
         self.assertEqual(MySecondStage().run(), 1)
-        self.assertEqual(variable, 2)
+        self.assertEqual(checkpoint, 2)
+
+class HelpersTestCase(TestCase):
+
+    def test_ensure_file(self):
+
+        from espresso.helpers import fs
+
+        fs.ensure_file('/tmp/espresso')
+
+    def test_ensure_tree(self):
+
+        # Create source tree.
+
+        # Create a pair of tempfile.
+        tempdir_1, tempdir_2 = tempfile.mkdtemp(), tempfile.mkdtemp()
+
+        with open(tempdir_1 + '/file1', 'w') as fd:
+            fd.write('content1')
+
+        os.mkdir(tempdir_1 + '/dir')
+        with open(tempdir_1 + '/dir/file2', 'w') as fd:
+            fd.write('content2')
+
+        from espresso.helpers import fs
+
+        # Ensure tree.
+        fs.ensure_tree(tempdir_2, tempdir_1)
+
+        # Assert for existence of paths.
+        self.assertTrue(os.path.exists(tempdir_2 + '/dir'))
+        self.assertTrue(os.path.exists(tempdir_2 + '/file1'))
+        self.assertTrue(os.path.exists(tempdir_2 + '/dir/file2'))
+
+        # Asssert files and dirs
+        self.assertTrue(os.path.isdir(tempdir_2 + '/dir'))
+        self.assertTrue(os.path.isfile(tempdir_2 + '/file1'))
+        self.assertTrue(os.path.isfile(tempdir_2 + '/dir/file2'))
+
+        # Assert for content in files.
+        with open(tempdir_2 + '/file1') as fd:
+            self.assertEqual(fd.read(), 'content1')
+
+        with open(tempdir_2 + '/dir/file2') as fd:
+            self.assertEqual(fd.read(), 'content2')

@@ -3,6 +3,7 @@ import sys
 import sh
 import pwd
 import fstab as fstab_lib
+import shutil
 
 class System(object):
 
@@ -95,6 +96,31 @@ class Dpkg(object):
 
 class FileSystem(object):
     " Some basic functions. "
+
+    def ensure_tree(self, path, source):
+        " Copy a whole tree from a source to a destination."
+
+        print(" * Ensuring tree at '%s' ..." % (path, ))
+
+        # Check for source.
+        if not os.path.isdir(source):
+            raise TypeError("Source '%s' is not a path." % (source, ))
+
+        # Walk thru the source.
+        for orig_path, dirnames, filenames in os.walk(source):
+            
+            # Replace the source by the destination.
+            dest_path = orig_path.replace(source, path)
+
+            # Create destination if necessary.
+            if not os.path.exists(dest_path):
+                os.makedirs(dest_path)        
+
+            for filename in filenames:
+                shutil.copyfile(os.path.join(orig_path, filename), 
+                                os.path.join(dest_path, filename))
+                            
+        print("   ... done!")
 
     def ensure_file(self, path, content=None, size=None):
         " Ensure a file exists and its content."

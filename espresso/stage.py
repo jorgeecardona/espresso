@@ -4,11 +4,10 @@ class StageType(type):
     def __new__(cls, name, bases, attrs):
         
         # Check for meta-data in the Stage.
-
         meta = {}
 
         if 'Meta' in attrs:
-            # Extract all data from the clas and accept just the keys
+            # Extract all data from the class and accept just the keys
             # that don't start with _.
             data = attrs.pop('Meta').__dict__.items()
             meta.update(dict((k,v) for k,v in data if not k.startswith('_')))
