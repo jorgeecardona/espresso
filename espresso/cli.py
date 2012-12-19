@@ -21,8 +21,11 @@ def setup():
         sys.exit("This script must be run by root.")
 
     # Create main path for configurations.
-    os.mkdir('/etc/espresso')
-    os.mkdir('/etc/espresso/conf.d')
+    if not os.path.exists('/etc/espresso'):
+        os.mkdir('/etc/espresso')
+        
+    if not os.path.exists('/etc/espresso/conf.d'):
+        os.mkdir('/etc/espresso/conf.d')
 
 def main_options(args):
     " Handle options subparser."
